@@ -77,6 +77,7 @@ class App extends Component {
           
         </div>
       )
+    }
 
     const classes = [];
     if(this.state.persons.length <= 2) {
