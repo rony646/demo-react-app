@@ -30,7 +30,7 @@ const cockpit = (props) => {
 
     return(
         <div>
-            <h1>Hello, world!</h1>
+            <h1>{props.title}</h1>
             <p className={classes.join(' ')}>WORKING!!</p>
             <StyledButton alt={props.state} onClick={props.clicked}>
             Show / Hide Persons

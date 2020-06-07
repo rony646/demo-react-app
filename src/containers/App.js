@@ -20,6 +20,10 @@ const StyledButton = styled.button`
 `
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    // console.log('[App.js] constructor');
+  }
 
   state = {
     persons: [
@@ -29,6 +33,20 @@ class App extends Component {
     ],
     showPersons: false
   }
+
+  static getArrivedStateFromProps(props, state) {
+      console.log('STATE:', props)
+      return state;
+  }
+
+  componentWillMount() {
+    console.log('Component will mount');
+  }
+
+  componentDidMount() {
+    console.log('Component did mount');
+  }
+
 
   deletePersonHandler = (personIndex) => {
     const persons = [...this.state.persons];
@@ -87,6 +105,7 @@ class App extends Component {
     return(
       <div className="App">
         <Cockpit 
+        title={this.props.appTitle}
         state={this.state.showPersons}
         persons={this.state.persons}
         clicked={this.togglePersonsHandler}
