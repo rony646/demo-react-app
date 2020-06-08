@@ -47,6 +47,10 @@ class App extends Component {
     console.log('Component did mount');
   }
 
+  shouldComponentUpdate() {
+    return true;
+  }
+
 
   deletePersonHandler = (personIndex) => {
     const persons = [...this.state.persons];

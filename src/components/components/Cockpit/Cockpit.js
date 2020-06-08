@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import './Cockpit.css'
 
@@ -18,7 +18,15 @@ const StyledButton = styled.button`
 `
 
 
-const cockpit = (props) => {
+const Cockpit = (props) => {
+
+    useEffect(() => {
+      console.log('[Cockpit.js] useEffect')
+      setTimeout(() => {
+        alert('Saved to the cloud!');
+      }, 1000)
+    }, []);
+
     const classes = [];
     if(props.persons <= 2) {
       classes.push('red')
@@ -34,10 +42,9 @@ const cockpit = (props) => {
             <p className={classes.join(' ')}>WORKING!!</p>
             <StyledButton alt={props.state} onClick={props.clicked}>
             Show / Hide Persons
-            {console.log(props.persons)}
             </StyledButton>
         </div>
     )
 };
 
-export default cockpit;
+export default Cockpit;
