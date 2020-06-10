@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import './App.css';
 import Persons from '../components/components/Persons/Persons'
 import Cockpit from '../components/components/Cockpit/Cockpit'
-import WithClass from '../components/components/hoc/WithClass'
+import withClass from '../components/components/hoc/withClass'
+import Auxiliary from '../components/components/hoc/Auxiliary'
 
 const StyledButton = styled.button`
   background-color: ${props => props.alt ? 'red' : 'green' };
@@ -32,7 +33,8 @@ class App extends Component {
       { id:'qsda2', name: 'Jhon', age: 43},
       { id:'qsda3', name: 'Jordan', age: 15}
     ],
-    showPersons: false
+    showPersons: false,
+    counter: 0
   }
 
   static getArrivedStateFromProps(props, state) {
@@ -73,7 +75,9 @@ class App extends Component {
     const persons = [...this.state.persons]
     persons[personIndex] = person;
 
-    this.setState({persons: persons});
+    this.setState((prevState, props) => {
+      return {persons: persons, counter: prevState.counter + 1} // Right way to set state
+    });
   }
 
   togglePersonsHandler = () => {
@@ -108,7 +112,7 @@ class App extends Component {
     }
     
     return(
-      <WithClass classes="App">
+      <Auxiliary>
         <Cockpit 
         title={this.props.appTitle}
         state={this.state.showPersons}
@@ -116,44 +120,10 @@ class App extends Component {
         clicked={this.togglePersonsHandler}
         />
         {persons}
-      </WithClass>
+      </Auxiliary>
     )
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, "Hello, react!"));
   }
 }
 
-// const App = props => {
-
-//   const [ personsState, setPersonssate] = useState({
-//           persons: [
-//             { name: 'Rony', age: 20},
-//             { name: 'Jhon', age: 43},
-//             { name: 'Jordan', age: 15}
-//           ]});
-
-//     const switchNameHandler = () => {
-//           setPersonssate({
-//             persons: [
-//               { name: 'Rony Silva', age: 20},
-//               { name: 'Jhon', age: 43},
-//               { name: 'Jordan', age: 55}
-//             ]
-//           })
-//         }
-
-
-//   return(
-//         <div className="App">
-//           <h1>Hello, world!</h1>
-//           <p>This is really working!</p>
-//           <button onClick={switchNameHandler}>Swtich Name</button>
-//           <Person name={personsState.persons[0].name} age={personsState.persons[0].age}/>
-//           <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Soccer</Person>
-//           <Person name={personsState.persons[2].name} age={personsState.persons[2].age}/>
-//         </div>
-//         )
-// }
-
-
-
-export default App;
+export default withClass(App, "App");
