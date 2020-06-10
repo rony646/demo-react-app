@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import './App.css';
 import Persons from '../components/components/Persons/Persons'
 import Cockpit from '../components/components/Cockpit/Cockpit'
+import WithClass from '../components/components/hoc/WithClass'
 
 const StyledButton = styled.button`
   background-color: ${props => props.alt ? 'red' : 'green' };
@@ -107,7 +108,7 @@ class App extends Component {
     }
     
     return(
-      <div className="App">
+      <WithClass classes="App">
         <Cockpit 
         title={this.props.appTitle}
         state={this.state.showPersons}
@@ -115,7 +116,7 @@ class App extends Component {
         clicked={this.togglePersonsHandler}
         />
         {persons}
-      </div>
+      </WithClass>
     )
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, "Hello, react!"));
   }
