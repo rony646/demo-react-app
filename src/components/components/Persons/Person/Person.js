@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import Proptypes from 'prop-types'
+
 import './Person.css';
 import '../../hoc/Auxiliary'
 import styled from 'styled-components'
 import Auxiliary from '../../hoc/Auxiliary';
+import AuthContext from '../../../../context/auth-context'
 
 const StyledDiv = styled.div`
     width: 60%;
@@ -18,10 +21,14 @@ const StyledDiv = styled.div`
 
 `;
 
-const person = props => {
+const Person = props => {
+
+    const authContext = useContext(AuthContext)
+
     return(
         <Auxiliary>
             <StyledDiv>
+                { authContext.auth ? <p>Authenticaded</p> : <p>Please log in</p>}
                 <p onClick={props.click}>I'm {props.name} and I am {props.age} years old!</p>
                 <p>{props.children}</p>
                 <input type="text" onChange={props.changed}  value={props.name}/>
@@ -30,4 +37,11 @@ const person = props => {
     )
 }
 
-export default person;
+Person.propTypes = {
+    click: Proptypes.func,
+    name: Proptypes.string,
+    age: Proptypes.number,
+    changed: Proptypes.func
+};
+
+export default Person;

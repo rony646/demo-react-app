@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useRef, useContext} from 'react'
 import styled from 'styled-components'
+import AuthContext from '../../../context/auth-context'
 import './Cockpit.css'
 
 const StyledButton = styled.button`
@@ -19,12 +20,12 @@ const StyledButton = styled.button`
 
 
 const Cockpit = (props) => {
+    const toggleBtnRef = useRef(null);
+    const authContext = useContext(AuthContext)
 
     useEffect(() => {
       console.log('[Cockpit.js] useEffect')
-      setTimeout(() => {
-        alert('Saved to the cloud!');
-      }, 1000)
+      toggleBtnRef.current.click(); // Button referenced clicked!
     }, []);
 
     const classes = [];
@@ -40,9 +41,10 @@ const Cockpit = (props) => {
         <div>
             <h1>{props.title}</h1>
             <p className={classes.join(' ')}>WORKING!!</p>
-            <StyledButton alt={props.state} onClick={props.clicked}>
+            <StyledButton ref={toggleBtnRef} alt={props.state} onClick={props.clicked}>
             Show / Hide Persons
             </StyledButton>
+            <StyledButton onClick={authContext.login} >Log in</StyledButton>
         </div>
     )
 };

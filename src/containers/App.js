@@ -5,6 +5,7 @@ import Persons from '../components/components/Persons/Persons'
 import Cockpit from '../components/components/Cockpit/Cockpit'
 import withClass from '../components/components/hoc/withClass'
 import Auxiliary from '../components/components/hoc/Auxiliary'
+import AuthContext from '../context/auth-context'
 
 const StyledButton = styled.button`
   background-color: ${props => props.alt ? 'red' : 'green' };
@@ -34,7 +35,8 @@ class App extends Component {
       { id:'qsda3', name: 'Jordan', age: 15}
     ],
     showPersons: false,
-    counter: 0
+    counter: 0,
+    auth: false
   }
 
   static getArrivedStateFromProps(props, state) {
@@ -87,6 +89,12 @@ class App extends Component {
     })
   }
 
+  loginHandler = () => {
+    this.setState({auth: true});
+  }
+
+
+
   render() {
 
     let persons = null;
@@ -98,6 +106,7 @@ class App extends Component {
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
           changed={this.nameChangedHandler}
+          isAuthenticaded={this.state.auth}
           />
         </div>
       )
@@ -113,13 +122,18 @@ class App extends Component {
     
     return(
       <Auxiliary>
-        <Cockpit 
-        title={this.props.appTitle}
-        state={this.state.showPersons}
-        persons={this.state.persons}
-        clicked={this.togglePersonsHandler}
-        />
-        {persons}
+        <AuthContext.Provider value={{
+          auth: this.state.auth,
+          login: this.loginHandler
+        }}>
+          <Cockpit 
+          title={this.props.appTitle}
+          state={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler}
+          />
+          {persons}
+        </AuthContext.Provider>
       </Auxiliary>
     )
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, "Hello, react!"));
